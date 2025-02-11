@@ -124,7 +124,9 @@ impl StatefulWidget for &List<'_> {
             item.content.render_skip(item_area, buf, skip_lines);
 
             if selection_spacing {
-                for j in skip_lines..(item.content.height() as u16).min(list_area.height - y) {
+                for j in skip_lines
+                    ..(item.content.height() as u16).min(list_area.height.saturating_sub(y))
+                {
                     // if the item is selected, we need to display the highlight symbol:
                     // - either for the first line of the item only,
                     // - or for each line of the item if the appropriate option is set
